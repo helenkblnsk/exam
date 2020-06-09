@@ -11,70 +11,76 @@ FILE* f_out, * f_in;
 void Norm(vector<float>& v)
 {
 
-  float max;
-  max = v[0]; 
-  // находим максимальный элемент
-  for (int i = 1; i < v.size(); i++)
-  {
-    if (v[i] > max) max = v[i];
-  }
-  // делим все элементы вектора на максимальный
-  for (int i = 0; i < v.size(); i++)
-  {
-    v[i] = v[i] / max;
-  }
+    float max;
+    max = v[0];
+    // находим максимальный элемент
+    for (int i = 1; i < v.size(); i++)
+    {
+        if (v[i] > max) max = v[i];
+    }
+    // делим все элементы вектора на максимальный
+    for (int i = 0; i < v.size(); i++)
+    {
+        v[i] = v[i] / max;
+    }
 }
 
 
 int main()
 {
-  const int size = 10;
-  float array[size];
-  //генерируем рандомные значения
-  for (size_t i = 0; i < size; i++)
-  {
-    array[i] = (rand() % 10);
-  }
+    const int size = 10;
+    float array[size];
+    //генерируем рандомные значения
+    for (size_t i = 0; i < size; i++)
+    {
+        array[i] = (rand() % 10);
+    }
 
-  // записываем в файл рандомные значения
-  f_out = fopen("c:\\Vector.bin", "wb"); 
-  fwrite(array, sizeof(int), size, f_out);
-  fclose(f_out);
+    // записываем в файл рандомные значения
+    f_out = fopen("c:\\Vector.bin", "wb");
+    fwrite(array, sizeof(float), size, f_out);
+    fclose(f_out);
 
-  //создаём вектор и временный массив
-  vector<float> v;
-  float temporary[size];
+    //создаём вектор и временный массив
+    vector<float> v;
+    float temporary[size];
 
-  //считываем во временный массив значения из файла
-  f_in = fopen("c:\\Vector.bin", "rb");
-  fread(temporary, sizeof(float), size, f_in); // используем работу через массив, потому что так удобно
-  fclose(f_in);
+    //считываем во временный массив значения из файла
+    f_in = fopen("c:\\Vector.bin", "rb");
+    fread(temporary, sizeof(float), size, f_in); // используем работу через массив, потому что так удобно
+    fclose(f_in);
 
-  //переписываем их в вектор
-  for (int i = 0; i < size; i++)
-  {
-    v.push_back(temporary[i]);
-  }
+    //переписываем их в вектор
+    for (int i = 0; i < size; i++)
+    {
+        v.push_back(temporary[i]);
+    }
 
-  // выводим вектор на экран
-  cout << "Source vector: " << endl;
-  for (int i = 0; i < v.size(); i++) cout << v[i] << " ";
-  cout << endl;
+    // выводим вектор на экран
+    cout << "Source vector: " << endl;
+    for (int i = 0; i < v.size(); i++)
+    {
+        cout << v[i] << " ";
+    }
+    cout << endl;
 
-  Norm(v); // вызываем функцию для нормирования вектора
+    Norm(v); // вызываем функцию для нормирования вектора
 
-  // выводим вектор после нормирования на экран 
-  cout << "Vector after norm: " << endl;
-  for (int i = 0; i < v.size(); i++) cout << v[i] << " ";
-  cout << endl;
+    // выводим вектор после нормирования на экран 
+    cout << "Vector after norm: " << endl;
+    for (int i = 0; i < v.size(); i++)
+    {
+        cout << v[i] << " ";
+    }
+    cout << endl;
 
+    //переписываем в массив значения вектора после изменения
+    for (int i = 0; i < size; i++)
+    {
+        temporary[i] = v[i];
+    }
+    // записываем в файл значения нормированного вектора
+    f_out = fopen("c:\\VectorNormed.bin", "wb");
+    fwrite(temporary, sizeof(float), size, f_out);
+    fclose(f_out);
 }
-//переписываем в массив значения вектора после изменения
-  for (int i = 0; i < size; i++)
-  {
-    temporary[i] = v[i];
-  }
-  // записываем в файл значения нормированного вектора
-  f_out = fopen("c:\\VectorNormed.bin", "wb");
-  fwrite(temporary, sizeof(float), size, f_out);
-  fclose(f_out);
