@@ -76,5 +76,5 @@ int main()
   }
   // записываем в файл значения нормированного вектора
   f_out = fopen("c:\\VectorNormed.bin", "wb");
-  fwrite(temporary, sizeof(int), size, f_out);
-  fclose(f_ou
+  fwrite(temporary, sizeof(float), size, f_out);
+  fclose(f_out);
