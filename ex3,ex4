@@ -1,0 +1,200 @@
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+void task1() 
+{
+    cout << "Найти и напечатать слова начинающиеся и заканчивающиеся на гласную букву" << endl << endl;
+    char str[] = "hello to anna kak alpha omega oreo ";
+    string s; //сюда мы будем помещать найденные слова
+
+    //разделяем на слова и помещаем их в строку
+    for (size_t i = 0; i < strlen(str); i++) 
+    {
+        if (str[i] != ' ')
+        {
+            //если наткнулись на пробел - помещаем символы в строку;
+            s.push_back(str[i]);
+        }
+        else 
+        {
+            //сраниваем первую и последнюю букву(буквы должны быть гласные);
+            if ((s.size() != 0) && (s[0] == 'a' || s[0] == 'e' || s[0] == 'o' || s[0] == 'i' || s[0] == 'u') && (s[s.size() - 1] == 'a' || s[s.size() - 1] == 'e' || s[s.size() - 1] == 'o' || s[s.size() - 1] == 'i' || s[s.size() - 1] == 'u'))
+            {
+                cout << s << endl;
+            }
+
+            //очищаем строку;
+            s.clear();
+        }
+    }
+
+    // проверяем первую и последнюю букву после последней итерации
+    if ((s.size() != 0) && (s[s.size() - 1] != ' ') && (s[0] == 'a' || s[0] == 'e' || s[0] == 'o' || s[0] == 'i' || s[0] == 'u') && (s[s.size() - 1] == 'a' || s[s.size() - 1] == 'e' || s[s.size() - 1] == 'o' || s[s.size() - 1] == 'i' || s[s.size() - 1] == 'u'))
+    {
+        cout << s << endl;
+    }
+
+    cout << endl;
+}
+
+//структура данных
+struct state
+{
+    char name[56];
+    char capital[56];
+    char lenguage[32];
+    int area;
+    char currency_unit[32];
+    char system[32];
+    char leader[32];
+};
+
+//функуия поиска
+void search(state* arr, int size)
+{
+    int k;
+    cout << "Хотите найти государство по его названию?(1 - да, другое число - нет): ";
+    cin >> k;
+
+    //если пользователь хочет начать поиск - вводим название государства
+    if (k == 1)
+    {
+        string name;
+        int count = 0;
+        cout << "Введите название: ";
+        cin >> name;
+        cout << endl;
+        for (int i = 0; i < size; i++)
+        {
+            //если название совпало - выводим информацию
+            if (name == arr[i].name)
+            {
+                cout << "Государство номер " << i + 1 << ": " << arr[i].name << ", Столица: " << arr[i].capital << ", Язык: " << arr[i].lenguage << endl;
+                cout << "Площадь: " << arr[i].area << ", Валюта: " << arr[i].currency_unit << ", Гос. строй: " << arr[i].system << ", Лидер: " << arr[i].leader << endl << endl;
+                count++;
+            }
+        }
+        if (count == 0)
+        {
+            cout << "Не было найдено стран с таким названием" << endl;
+        }
+
+        //спрашиваем пользователя хочет ли он продолжить поиск
+        cout << "Продолжить поиск?(1 - да, другое число - нет): ";
+        cin >> k;
+        if (k == 1)
+        {
+            search(arr, size);
+            cout << endl;
+        }
+    }
+    else
+    {
+        cout << "Вы решили не искать" << endl << endl;
+    }
+}
+
+//функция вывода
+void out(state *arr, int size)
+{
+    //выводим информацию на экран
+    for (int i = 0; i < size; i++)
+    {
+        cout << "Государство номер " << i + 1 << ": " << arr[i].name << ", Столица: " << arr[i].capital << ", Язык: " << arr[i].lenguage << endl;
+        cout << "Площадь: " << arr[i].area << ", Валюта: " << arr[i].currency_unit << ", Гос. строй: " << arr[i].system << ", Лидер: " << arr[i].leader << endl << endl;
+    }
+}
+
+void task2()
+{
+    state* arr;
+    int size;
+
+    do
+    {
+        cout << "Введите кол-во государств для ввода: ";
+        cin >> size;
+    } while (size < 1);
+
+    //выделяем память под массив;
+    arr = new state[size];
+
+    //вводим данные;
+    for (int i = 0; i < size; i++)
+    {
+        cout << "Введите название государства номер " << i + 1 << ": ";
+        cin.ignore(cin.rdbuf()->in_avail());
+        cin.getline(arr[i].name, 56);
+        cout << endl;
+
+        cout << "Введите столицу: ";
+        cin.ignore(cin.rdbuf()->in_avail());
+        cin.getline(arr[i].capital, 56);
+        cout << endl;
+
+        cout << "Язык: ";
+        cin.ignore(cin.rdbuf()->in_avail());
+        cin.getline(arr[i].lenguage, 32);
+        cout << endl;
+
+        cout << "Площадь(в км^2): ";
+        cin >> arr[i].area;
+        cout << endl;
+
+        cout << "Валюта: ";
+        cin.ignore(cin.rdbuf()->in_avail());
+        cin.getline(arr[i].currency_unit, 32);
+        cout << endl;
+
+        cout << "Гос. строй: ";
+        cin.ignore(cin.rdbuf()->in_avail());
+        cin.getline(arr[i].system, 32);
+        cout << endl;
+
+        cout << "Гос. лидер: ";
+        cin.ignore(cin.rdbuf()->in_avail());
+        cin.getline(arr[i].leader, 32);
+        cout << endl;
+    }
+
+    search(arr, size);
+    out(arr, size);
+}
+
+void task3()
+{
+    ////////////////////
+}
+
+int main()
+{
+    setlocale(LC_ALL, "RU");
+    int number;
+
+    do 
+    {
+        cout << "Введите номер задания(1, 2, 3) или '0' для выхода: ";
+        cin >> number;
+
+        switch (number)
+        {
+        case 0:
+            break;
+        case 1:
+            task1();
+            break;
+        case 2:
+            task2();
+            break;
+        case 3:
+            task3();
+            break;
+
+        default:
+            cout << "Номер введен неверно!" << endl << endl;
+            break;
+        }
+    } while (number != 0);
+}
