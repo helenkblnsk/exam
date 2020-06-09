@@ -1,0 +1,18 @@
+// поток для записи
+std::ofstream out;     
+// окрываем файл для записи
+out.open("D:\\Monday.txt");
+std::ofstream out2;
+// окрываем файл для дозаписи
+out2.open("D:\\Friday.txt", std::ios::app); 
+
+// поток для чтения
+std::ifstream in;  
+// окрываем файл для чтения
+in.open("D:\\Sunday.txt"); 
+
+ // поток для чтения записи
+std::fstream fs; 
+ // окрываем файл для чтения-записи
+fs.open("D:\\Saturday.txt");
+ 
