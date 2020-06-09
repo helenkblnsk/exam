@@ -47,7 +47,7 @@ int main()
 
   //считываем во временный массив значения из файла
   f_in = fopen("c:\\Vector.bin", "rb");
-  fread(temporary, sizeof(int), size, f_in); // используем работу через массив, потому что так удобно
+  fread(temporary, sizeof(float), size, f_in); // используем работу через массив, потому что так удобно
   fclose(f_in);
 
   //переписываем их в вектор
